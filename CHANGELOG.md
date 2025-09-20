@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📚 **Documentation** — Updated all docs to reflect lesson-2.html completion
 - 🎯 **Learning Path** — Enhanced curriculum with natural language focus
 
+### Fixed
+- 🐛 **Critical Bug Fix** — lesson-1.html /clear command progress saving
+- 🔧 **Command Processing Logic** — Fixed empty response handling in handleCommand()
+- ✅ **Lesson Completion** — Users can now complete lesson-1 and access lesson-2
+- 💾 **Progress Persistence** — Ensured localStorage saves even with empty responses
+
 ### Educational
 - ✅ **Lesson 1** — "Первые команды Claude Code" (8 steps, completed)
 - ✅ **Lesson 2** — "Естественные команды" (10 steps, completed)
