@@ -143,3 +143,10 @@ logs
 build/
 dist/
 out/
+
+# Backup system
+backups/
+*.backup
+*.tar.gz
+.backup_*
+restore_*.sh

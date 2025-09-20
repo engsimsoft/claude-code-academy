@@ -4,25 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Code Academy - Преодолей страх терминала</title>
+
+    <!-- Critical CSS for first paint -->
     <style>
-        /* CSS Variables - Claude Design System */
+        /* Critical styles for above-the-fold content */
         :root {
             --color-bg: #F7F5F3;
             --color-text: #2D1B0E;
             --color-accent: #FF6B35;
-            --color-button: #1a1a1a;
-            --color-button-text: #ffffff;
-            --color-card: #ffffff;
-            --color-border: #E5E5E5;
-            --color-muted: #7A7A7A;
-            --border-radius: 8px;
-            --border-radius-lg: 12px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         }
 
-        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -43,14 +35,13 @@
             padding: 0 24px;
         }
 
-        /* Header */
+        /* Header critical styles */
         .header {
             background-color: var(--color-bg);
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid #E5E5E5;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(8px);
         }
 
         .header-content {
@@ -75,23 +66,7 @@
             font-size: 28px;
         }
 
-        .nav {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav a {
-            color: var(--color-text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .nav a:hover {
-            color: var(--color-accent);
-        }
-
-        /* Hero Section */
+        /* Hero critical styles */
         .hero {
             padding: 120px 0;
             text-align: center;
@@ -108,7 +83,7 @@
 
         .hero-subtitle {
             font-size: 24px;
-            color: var(--color-muted);
+            color: #7A7A7A;
             margin-bottom: 48px;
             max-width: 600px;
             margin-left: auto;
@@ -116,355 +91,41 @@
         }
 
         .cta-button {
-            background-color: var(--color-button);
-            color: var(--color-button-text);
+            background-color: #1a1a1a;
+            color: #ffffff;
             padding: 16px 32px;
-            border-radius: var(--border-radius-lg);
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 18px;
             display: inline-block;
-            transition: all 0.2s ease;
             border: none;
             cursor: pointer;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Section Base Styles */
-        .section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            font-size: 48px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 24px;
-            color: var(--color-text);
-        }
-
-        .section-subtitle {
-            font-size: 20px;
-            color: var(--color-muted);
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 64px;
-        }
-
-        /* Problem Section */
-        .problem {
-            background-color: var(--color-card);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 64px;
-        }
-
-        .problem-item {
-            text-align: center;
-            padding: 32px 24px;
-            background-color: var(--color-bg);
-            border-radius: var(--border-radius-lg);
-            border: 1px solid var(--color-border);
-        }
-
-        .problem-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .problem-item h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--color-text);
-        }
-
-        .problem-item p {
-            color: var(--color-muted);
-        }
-
-        /* Solution Section */
-        .solution {
-            background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
-        }
-
-        .solution-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 48px;
-            margin-top: 64px;
-        }
-
-        .solution-feature {
-            display: flex;
-            gap: 24px;
-        }
-
-        .solution-feature-icon {
-            flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            background-color: var(--color-accent);
-            border-radius: var(--border-radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .solution-feature-content h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--color-text);
-        }
-
-        .solution-feature-content p {
-            color: var(--color-muted);
-        }
-
-        /* Lessons Section */
-        .lessons {
-            background-color: var(--color-card);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 64px;
-        }
-
-        .lesson-card {
-            background-color: var(--color-bg);
-            border-radius: var(--border-radius-lg);
-            border: 1px solid var(--color-border);
-            padding: 32px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .lesson-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .lesson-number {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            background-color: var(--color-accent);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 32px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .lesson-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--color-text);
-        }
-
-        .lesson-card p {
-            color: var(--color-muted);
-            margin-bottom: 24px;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background-color: var(--color-border);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: var(--color-accent);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            font-size: 14px;
-            color: var(--color-muted);
-        }
-
-        /* Demo Section */
-        .demo {
-            background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
-        }
-
-        .terminal-demo {
-            background-color: #1a1a1a;
-            border-radius: var(--border-radius-lg);
-            padding: 32px;
-            margin-top: 64px;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .terminal-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .terminal-dot.red { background-color: #ff5f56; }
-        .terminal-dot.yellow { background-color: #ffbd2e; }
-        .terminal-dot.green { background-color: #27ca3f; }
-
-        .terminal-content {
-            color: #ffffff;
-            line-height: 1.8;
-        }
-
-        .terminal-prompt {
-            color: #00ff00;
-        }
-
-        .terminal-command {
-            color: #87ceeb;
-        }
-
-        .terminal-output {
-            color: #ffffff;
-            margin-left: 0;
-        }
-
-        .typing-animation {
-            border-right: 2px solid #ffffff;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { border-color: transparent; }
-            51%, 100% { border-color: #ffffff; }
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--color-text);
-            color: var(--color-card);
-            padding: 64px 0 32px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 48px;
-            margin-bottom: 32px;
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .footer-section a {
-            color: var(--color-muted);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-section a:hover {
-            color: var(--color-card);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #3a3a3a;
-            padding-top: 32px;
-            text-align: center;
-            color: var(--color-muted);
-        }
-
-        /* Responsive Design */
+        /* Mobile critical styles */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-
-            .header-content {
-                height: 64px;
-            }
-
-            .nav {
-                display: none;
-            }
-
-            .hero {
-                padding: 80px 0;
-            }
-
-            .hero-title {
-                font-size: 40px;
-            }
-
-            .hero-subtitle {
-                font-size: 18px;
-            }
-
-            .section {
-                padding: 64px 0;
-            }
-
-            .section-title {
-                font-size: 32px;
-            }
-
-            .section-subtitle {
-                font-size: 16px;
-            }
-
-            .problem-grid,
-            .lessons-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .solution-features {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .terminal-demo {
-                padding: 24px 16px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
+            .container { padding: 0 16px; }
+            .header-content { height: 64px; }
+            .hero { padding: 80px 0; }
+            .hero-title { font-size: 40px; }
+            .hero-subtitle { font-size: 18px; }
         }
     </style>
+
+    <!-- Preload critical CSS files -->
+    <link rel="preload" href="css/design-system.css" as="style">
+    <link rel="preload" href="css/layout.css" as="style">
+    <link rel="preload" href="css/components.css" as="style">
+    <link rel="preload" href="css/sections.css" as="style">
+    <link rel="preload" href="css/animations.css" as="style">
+
+    <!-- Load CSS files -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
     <!-- Header -->
@@ -487,7 +148,7 @@
         <div class="container">
             <h1 class="hero-title">От Cursor к Claude Code за 30 минут</h1>
             <p class="hero-subtitle">Научись использовать самый мощный AI-кодинг инструмент через терминал. Больше возможностей, меньше кликов.</p>
-            <a href="#lessons" class="cta-button">Начать обучение</a>
+            <a href="lesson-1.html" class="cta-button">Начать обучение</a>
         </div>
     </section>
 
@@ -563,41 +224,46 @@
             <p class="section-subtitle">Освой Claude Code за 4 практических урока. От первых команд до продвинутых фич.</p>
 
             <div class="lessons-grid">
-                <div class="lesson-card">
-                    <span class="lesson-number">1</span>
-                    <h3>Первые команды Claude Code</h3>
-                    <p>Изучи /help, /status, /files. Пойми как общаться с Claude через терминал</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
+                <a href="lesson-1.html" class="lesson-card-link">
+                    <div class="lesson-card" data-lesson="1">
+                        <span class="lesson-number">1</span>
+                        <h3>Первые команды Claude Code</h3>
+                        <p>Изучи /help, /status, /files. Пойми как общаться с Claude через терминал</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="lesson1-progress"></div>
+                        </div>
+                        <div class="progress-text" id="lesson1-text">Не начато</div>
                     </div>
-                    <div class="progress-text">Завершено</div>
-                </div>
-                <div class="lesson-card">
+                </a>
+                <div class="lesson-card locked" data-lesson="2">
                     <span class="lesson-number">2</span>
                     <h3>Естественные команды</h3>
                     <p>"Создай React компонент", "Исправь баг в коде". Обычные фразы вместо сложных команд</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
+                        <div class="progress-fill"></div>
                     </div>
-                    <div class="progress-text">75% завершено</div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
                 </div>
-                <div class="lesson-card">
+                <div class="lesson-card locked" data-lesson="3">
                     <span class="lesson-number">3</span>
                     <h3>Работа с проектом</h3>
                     <p>Оптимизация кода, рефакторинг, создание тестов. Комплексные задачи одним промптом</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 40%"></div>
+                        <div class="progress-fill"></div>
                     </div>
-                    <div class="progress-text">40% завершено</div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
                 </div>
-                <div class="lesson-card">
+                <div class="lesson-card locked" data-lesson="4">
                     <span class="lesson-number">4</span>
                     <h3>Продвинутые фичи</h3>
                     <p>Git интеграция, /config настройки, кастомные промпты. Полная мощь Claude Code</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
+                        <div class="progress-fill"></div>
                     </div>
-                    <div class="progress-text">Не начато</div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
                 </div>
             </div>
         </div>
@@ -652,7 +318,7 @@ import Button from './components/Button'
                 </div>
                 <div class="footer-section">
                     <h4>Обучение</h4>
-                    <a href="#lessons">Уроки</a>
+                    <a href="lesson-1.html">Урок 1: Первые команды</a>
                     <a href="#demo">Демо</a>
                     <a href="#solution">Возможности</a>
                 </div>
@@ -675,78 +341,11 @@ import Button from './components/Button'
         </div>
     </footer>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Typing animation for terminal
-        const typingElement = document.querySelector('.typing-animation');
-        const commands = ['добавь тесты', '/files', 'оптимизируй код', 'исправь баги'];
-        let commandIndex = 0;
-        let charIndex = 0;
-
-        function typeCommand() {
-            if (commandIndex < commands.length) {
-                const currentCommand = commands[commandIndex];
-                if (charIndex < currentCommand.length) {
-                    typingElement.textContent = currentCommand.substring(0, charIndex + 1);
-                    charIndex++;
-                    setTimeout(typeCommand, 100);
-                } else {
-                    setTimeout(() => {
-                        charIndex = 0;
-                        commandIndex = (commandIndex + 1) % commands.length;
-                        setTimeout(typeCommand, 1000);
-                    }, 2000);
-                }
-            }
-        }
-
-        // Start typing animation
-        typeCommand();
-
-        // Lesson card interactions
-        document.querySelectorAll('.lesson-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const progressBar = this.querySelector('.progress-fill');
-                const progressText = this.querySelector('.progress-text');
-                const currentWidth = parseInt(progressBar.style.width);
-
-                if (currentWidth < 100) {
-                    const newWidth = Math.min(currentWidth + 25, 100);
-                    progressBar.style.width = newWidth + '%';
-
-                    if (newWidth === 100) {
-                        progressText.textContent = 'Завершено';
-                    } else {
-                        progressText.textContent = newWidth + '% завершено';
-                    }
-                }
-            });
-        });
-
-        // Add scroll effect to header
-        let lastScrollY = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > lastScrollY) {
-                header.style.transform = 'translateY(-100%)';
-            } else {
-                header.style.transform = 'translateY(0)';
-            }
-            lastScrollY = window.scrollY;
-        });
-    </script>
+    <!-- Load JavaScript files with defer for non-blocking execution -->
+    <script src="js/utils.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/lessons.js" defer></script>
+    <script src="js/terminal-demo.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>

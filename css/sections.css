@@ -1,0 +1,92 @@
+/* =================================
+   CLAUDE CODE ACADEMY - SECTIONS
+   ================================= */
+
+/* Hero Section */
+.hero {
+  padding: var(--space-3xl) 0;
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
+}
+
+.hero-title {
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 24px;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Problem Section */
+.problem {
+  background-color: var(--color-card);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Solution Section */
+.solution {
+  background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
+}
+
+/* Lessons Section */
+.lessons {
+  background-color: var(--color-card);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Demo Section */
+.demo {
+  background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
+}
+
+/* Responsive Sections */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-2xl) 0;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: var(--space-3xl) 0;
+  }
+
+  .hero-title {
+    font-size: 64px;
+  }
+
+  .hero-subtitle {
+    font-size: 24px;
+  }
+}
