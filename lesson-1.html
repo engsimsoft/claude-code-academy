@@ -923,10 +923,12 @@ Hello! Добро пожаловать в Claude Code Academy!
 
                 // Проверка правильности команды
                 if (command === currentStep.command.toLowerCase()) {
-                    // Правильная команда
-                    this.showResponse(currentStep.response);
+                    // Правильная команда - сначала завершаем шаг и переходим к следующему
                     this.completeStep(currentStep.id);
                     this.moveToNextStep();
+
+                    // Затем показываем ответ (даже если он пустой)
+                    this.showResponse(currentStep.response);
                 } else {
                     // Неправильная команда - показать подсказку
                     this.showHint(`❌ Попробуйте еще раз. ${currentStep.hint}`);
