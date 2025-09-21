@@ -192,29 +192,49 @@ const Lessons = {
    * @param {number} nextLessonNumber - Номер следующего урока
    */
   unlockNextLesson(nextLessonNumber) {
+    console.log(`Lessons: Попытка разблокировки урока ${nextLessonNumber}`);
+
     const nextCard = document.querySelector(`[data-lesson="${nextLessonNumber}"]`);
+    console.log('Lessons: Найдена карточка:', nextCard);
+
     if (nextCard) {
+      console.log('Lessons: Разблокируем урок', nextLessonNumber);
+
+      // Удаляем класс locked, добавляем unlocked
       nextCard.classList.remove('locked');
       nextCard.classList.add('unlocked');
       nextCard.removeAttribute('aria-disabled');
+      console.log('Lessons: Классы обновлены');
 
       // Удалить значок замка
       const lockIcon = nextCard.querySelector('.lesson-lock');
       if (lockIcon) {
         lockIcon.remove();
+        console.log('Lessons: Значок замка удален');
       }
 
       // Добавить ссылку для разблокированного урока
       const lessonLink = document.createElement('a');
       lessonLink.href = `lesson-${nextLessonNumber}.html`;
       lessonLink.className = 'lesson-card-link';
+      lessonLink.style.display = 'block';
+      lessonLink.style.textDecoration = 'none';
+      lessonLink.style.color = 'inherit';
 
       // Обернуть карточку в ссылку
       const parent = nextCard.parentNode;
+      console.log('Lessons: Родительский элемент:', parent);
+
       if (parent && !parent.classList.contains('lesson-card-link')) {
+        console.log('Lessons: Оборачиваем в ссылку');
         parent.replaceWith(lessonLink);
         lessonLink.appendChild(nextCard);
+        console.log('Lessons: Урок успешно разблокирован');
+      } else {
+        console.log('Lessons: Карточка уже обернута в ссылку или родитель не найден');
       }
+    } else {
+      console.error(`Lessons: Карточка урока ${nextLessonNumber} не найдена`);
     }
   },
 
@@ -222,24 +242,45 @@ const Lessons = {
    * Обновление состояния блокировки уроков
    */
   updateLessonLocks() {
+    console.log('Lessons: Обновление состояния блокировки уроков');
     const lessonCards = document.querySelectorAll('.lesson-card');
+    console.log('Lessons: Найдено карточек:', lessonCards.length);
 
     lessonCards.forEach((card, index) => {
       const lessonNumber = index + 1;
       const lessonData = this._progressData[`lesson${lessonNumber}`];
+      console.log(`Lessons: Урок ${lessonNumber}, данные:`, lessonData);
 
       if (lessonNumber === 1) {
         // Первый урок всегда доступен
         card.classList.remove('locked');
         card.classList.add('unlocked');
+        console.log(`Lessons: Урок ${lessonNumber} всегда разблокирован`);
       } else if (lessonData && lessonData.completed) {
         // Урок завершен - разблокирован
         card.classList.remove('locked');
         card.classList.add('unlocked');
+        console.log(`Lessons: Урок ${lessonNumber} завершен, разблокирован`);
+
+        // Убедимся, что есть ссылка
+        const parent = card.parentNode;
+        if (!parent.classList.contains('lesson-card-link')) {
+          console.log(`Lessons: Добавляем ссылку для урока ${lessonNumber}`);
+          const lessonLink = document.createElement('a');
+          lessonLink.href = `lesson-${lessonNumber}.html`;
+          lessonLink.className = 'lesson-card-link';
+          lessonLink.style.display = 'block';
+          lessonLink.style.textDecoration = 'none';
+          lessonLink.style.color = 'inherit';
+
+          parent.replaceWith(lessonLink);
+          lessonLink.appendChild(card);
+        }
       } else {
         // Урок заблокирован
         card.classList.add('locked');
         card.classList.remove('unlocked');
+        console.log(`Lessons: Урок ${lessonNumber} заблокирован`);
       }
     });
   },

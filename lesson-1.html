@@ -1109,13 +1109,34 @@ Hello! Добро пожаловать в Claude Code Academy!
              * Разблокировка следующего урока
              */
             unlockNextLesson() {
-                // Использовать глобальный модуль Lessons для разблокировки урока 2
-                if (window.Lessons && typeof window.Lessons.unlockNextLesson === 'function') {
-                    window.Lessons.unlockNextLesson(2);
-                    console.log('Lesson1: Урок 2 разблокирован');
-                } else {
-                    console.warn('Lesson1: Модуль Lessons не найден, урок 2 не разблокирован');
-                }
+                console.log('Lesson1: Попытка разблокировки урока 2');
+                console.log('Lesson1: window.Lessons =', window.Lessons);
+
+                // Ждем загрузки модуля Lessons
+                const tryUnlock = () => {
+                    if (window.Lessons && typeof window.Lessons.unlockNextLesson === 'function') {
+                        console.log('Lesson1: Вызываем Lessons.unlockNextLesson(2)');
+                        window.Lessons.unlockNextLesson(2);
+                        console.log('Lesson1: Урок 2 разблокирован успешно');
+
+                        // Также обновляем глобальный прогресс
+                        const globalProgress = Utils.storage('claude-lessons-progress') || {
+                            lesson1: { progress: 0, completed: false },
+                            lesson2: { progress: 0, completed: false },
+                            lesson3: { progress: 0, completed: false },
+                            lesson4: { progress: 0, completed: false }
+                        };
+                        globalProgress.lesson1.completed = true;
+                        globalProgress.lesson1.progress = 100;
+                        Utils.storage('claude-lessons-progress', globalProgress);
+                        console.log('Lesson1: Глобальный прогресс обновлен');
+                    } else {
+                        console.warn('Lesson1: Модуль Lessons еще не загружен, пробуем еще раз...');
+                        setTimeout(tryUnlock, 100);
+                    }
+                };
+
+                tryUnlock();
             },
 
             /**
