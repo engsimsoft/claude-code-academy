@@ -50,39 +50,42 @@ claude-code-academy/
 
 ## 🎨 CSS Architecture
 
-### Модульная система
-Стили разделены на 5 специализированных модулей:
+### Design System
+- **Claude.ai Authentic** — точная копия фирменного стиля Anthropic
+- **CSS Custom Properties** — централизованные переменные в `:root`
+- **Modular Structure** — 5 специализированных CSS файлов
+- **Critical CSS Inline** — первоначальные стили в `<head>` для быстрой отрисовки
 
-1. **design-system.css** — CSS Custom Properties, цветовая палитра, типографика
-2. **layout.css** — Grid системы, контейнеры, responsive breakpoints
-3. **components.css** — Переиспользуемые компоненты (кнопки, карточки)
-4. **sections.css** — Стили для конкретных секций страниц
-5. **animations.css** — Hover эффекты, transitions, keyframes
-
-### Claude Design System
+### CSS Modules Structure
 ```css
+/* design-system.css - Основа */
 :root {
-  /* Цветовая палитра */
-  --color-bg: #F7F5F3;           /* Кремовый фон */
-  --color-text: #2D1B0E;         /* Темно-коричневый текст */
-  --color-accent: #FF6B35;       /* Оранжевый акцент */
-  --color-button: #1a1a1a;       /* Черные кнопки */
-  --color-card: #ffffff;         /* Белые карточки */
-  
-  /* Типографика */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  
-  /* Spacing */
-  --space-xs: 8px;
-  --space-sm: 16px;
-  --space-md: 24px;
-  --space-lg: 32px;
-  
-  /* Компоненты */
-  --border-radius: 8px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --color-bg: #F7F5F3;      /* Фон страницы */
+  --color-accent: #FF6B35;   /* Акцентный оранжевый */
+  --color-text: #2D1B0E;     /* Основной текст */
+  --space-md: 24px;          /* Отступы */
+  --border-radius: 8px;      /* Скругления */
+}
+
+/* components.css - Компоненты */
+.lesson-number {             /* Номера уроков */
+  width: 32px; height: 32px; /* Круглые на главной */
+  border-radius: 50%;        /* Круглая форма */
+}
+
+/* Inline CSS в lesson-*.html - Переопределения */
+.lesson-header .lesson-number {
+  padding: 8px 16px !important;    /* Прямоугольные в уроках */
+  border-radius: 20px !important;  /* Скругленные углы */
+  width: auto !important;          /* Автоширина для текста */
 }
 ```
+
+### CSS Specificity Strategy
+- **Base styles** в external CSS файлах
+- **Page-specific overrides** с `!important` в inline CSS
+- **Selector specificity** `.lesson-header .lesson-number` > `.lesson-number`
+- **Consistent theming** через CSS Custom Properties
 
 ## ⚙️ JavaScript Architecture
 

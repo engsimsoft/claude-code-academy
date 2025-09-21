@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Academy - Преодолей страх терминала</title>
+
+    <!-- Critical CSS for first paint -->
+    <style>
+        /* Critical styles for above-the-fold content */
+        :root {
+            --color-bg: #F7F5F3;
+            --color-text: #2D1B0E;
+            --color-accent: #FF6B35;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header critical styles */
+        .header {
+            background-color: var(--color-bg);
+            border-bottom: 1px solid #E5E5E5;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: "⚡";
+            font-size: 28px;
+        }
+
+        /* Hero critical styles */
+        .hero {
+            padding: 120px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--color-text);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: #7A7A7A;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Mobile critical styles */
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .header-content { height: 64px; }
+            .hero { padding: 80px 0; }
+            .hero-title { font-size: 40px; }
+            .hero-subtitle { font-size: 18px; }
+        }
+    </style>
+
+    <!-- Preload critical CSS files -->
+    <link rel="preload" href="css/design-system.css" as="style">
+    <link rel="preload" href="css/layout.css" as="style">
+    <link rel="preload" href="css/components.css" as="style">
+    <link rel="preload" href="css/sections.css" as="style">
+    <link rel="preload" href="css/animations.css" as="style">
+
+    <!-- Load CSS files -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Claude Code Academy</a>
+                <nav class="nav">
+                    <a href="#problem">Проблема</a>
+                    <a href="#solution">Решение</a>
+                    <a href="#lessons">Уроки</a>
+                    <a href="#demo">Демо</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">От Cursor к Claude Code за 30 минут</h1>
+            <p class="hero-subtitle">Научись использовать самый мощный AI-кодинг инструмент через терминал. Больше возможностей, меньше кликов.</p>
+            <a href="lesson-1.html" class="cta-button">Начать обучение</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section problem">
+        <div class="container">
+            <h2 class="section-title">Почему разработчики ставят Cursor, но боятся Claude Code?</h2>
+            <p class="section-subtitle">Claude Code мощнее GUI-инструментов, но работает через терминал. И это пугает.</p>
+
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <span class="problem-icon">🖥️</span>
+                    <h3>Привык к GUI в Cursor/Windsurf</h3>
+                    <p>Ты привык кодить через кнопки и меню, а Claude Code работает через терминал. Кажется сложнее</p>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">⚡</span>
+                    <h3>Страх потерять скорость</h3>
+                    <p>Боишься, что переход на терминал замедлит разработку и придётся искать команды</p>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">🌫️</span>
+                    <h3>Кажется менее дружелюбным</h3>
+                    <p>Чёрный экран терминала выглядит менее приветливо, чем яркие интерфейсы IDE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="section solution">
+        <div class="container">
+            <h2 class="section-title">Claude Code на самом деле мощнее</h2>
+            <p class="section-subtitle">Один промпт в Claude Code заменяет десятки кликов в GUI-инструментах. Это качественно новый уровень разработки.</p>
+
+            <div class="solution-features">
+                <div class="solution-feature">
+                    <div class="solution-feature-icon">🎨</div>
+                    <div class="solution-feature-content">
+                        <h3>Естественный язык</h3>
+                        <p>Claude Code понимает обычные фразы: "создай React компонент", "исправь баг", "добавь тесты"</p>
+                    </div>
+                </div>
+                <div class="solution-feature">
+                    <div class="solution-feature-icon">🚀</div>
+                    <div class="solution-feature-content">
+                        <h3>Полный контроль</h3>
+                        <p>Видишь все изменения в проекте, можешь отменять и настраивать. Никаких скрытых действий</p>
+                    </div>
+                </div>
+                <div class="solution-feature">
+                    <div class="solution-feature-icon">📖</div>
+                    <div class="solution-feature-content">
+                        <h3>Пошаговое объяснение</h3>
+                        <p>Каждая команда разбирается подробно с примерами и практическими случаями</p>
+                    </div>
+                </div>
+                <div class="solution-feature">
+                    <div class="solution-feature-icon">⚡</div>
+                    <div class="solution-feature-content">
+                        <h3>Интерактивность</h3>
+                        <p>Не просто чтение документации, а живое взаимодействие с терминалом</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section id="lessons" class="section lessons">
+        <div class="container">
+            <h2 class="section-title">Интерактивные уроки</h2>
+            <p class="section-subtitle">Освой Claude Code за 4 практических урока. От первых команд до продвинутых фич.</p>
+
+            <div class="lessons-grid">
+                <a href="lesson-1.html" class="lesson-card-link">
+                    <div class="lesson-card" data-lesson="1">
+                        <span class="lesson-number">1</span>
+                        <h3>Первые команды Claude Code</h3>
+                        <p>Изучи /help, /status, /files. Пойми как общаться с Claude через терминал</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="lesson1-progress"></div>
+                        </div>
+                        <div class="progress-text" id="lesson1-text">Не начато</div>
+                    </div>
+                </a>
+                <div class="lesson-card locked" data-lesson="2">
+                    <span class="lesson-number">2</span>
+                    <h3>Естественные команды</h3>
+                    <p>"Создай React компонент", "Исправь баг в коде". Обычные фразы вместо сложных команд</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
+                </div>
+                <div class="lesson-card locked" data-lesson="3">
+                    <span class="lesson-number">3</span>
+                    <h3>Работа с проектом</h3>
+                    <p>Оптимизация кода, рефакторинг, создание тестов. Комплексные задачи одним промптом</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
+                </div>
+                <div class="lesson-card locked" data-lesson="4">
+                    <span class="lesson-number">4</span>
+                    <h3>Продвинутые фичи</h3>
+                    <p>Git интеграция, /config настройки, кастомные промпты. Полная мощь Claude Code</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">Заблокировано</div>
+                    <div class="lesson-lock">🔒</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="section demo">
+        <div class="container">
+            <h2 class="section-title">Демо Claude Code</h2>
+            <p class="section-subtitle">Реальная сессия работы с Claude Code. Посмотри как просто создавать код.</p>
+
+            <div class="terminal-demo">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-content">
+                    <div><span class="terminal-prompt">~/my-app$</span> <span class="terminal-command">/help</span></div>
+                    <div class="terminal-output">
+🤖 Claude Code: Я могу помочь с разработкой!<br><br>
+🚀 Основные команды:<br>
+  /files - показать структуру проекта<br>
+  /status - статус текущей задачи<br><br>
+🎨 Пиши обычными словами:<br>
+  "Создай React компонент для кнопки"<br>
+  "Исправь баг в коде"<br>
+  "Добавь тесты для этого компонента"
+                    </div>
+                    <div><span class="terminal-prompt">~/my-app$</span> создай React компонент для кнопки</div>
+                    <div class="terminal-output">
+🤖 Claude: Создаю компонент Button.tsx с модерным дизайном...<br><br>
+✓ Создан src/components/Button.tsx<br>
+✓ Добавлен TypeScript интерфейс<br>
+✓ Настроены hover эффекты<br><br>
+📝 Компонент готов! Можно импортировать:<br>
+import Button from './components/Button'
+                    </div>
+                    <div><span class="terminal-prompt">~/my-app$</span> <span class="typing-animation"></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Claude Code Academy</h4>
+                    <p style="color: var(--color-muted); margin-top: 8px;">Интерактивное обучение командной строке с ИИ-помощником</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Обучение</h4>
+                    <a href="lesson-1.html">Урок 1: Первые команды</a>
+                    <a href="#demo">Демо</a>
+                    <a href="#solution">Возможности</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Ресурсы</h4>
+                    <a href="#">Документация</a>
+                    <a href="#">Сообщество</a>
+                    <a href="#">Поддержка</a>
+                </div>
+                <div class="footer-section">
+                    <h4>О проекте</h4>
+                    <a href="#">О нас</a>
+                    <a href="#">Блог</a>
+                    <a href="#">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Academy. Создано с Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript отключен для тестирования -->
+</body>
+</html>

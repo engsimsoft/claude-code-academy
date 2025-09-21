@@ -5,6 +5,20 @@ All notable changes to Claude Code Academy will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2025-09-21
+
+### Fixed
+
+- 🎨 **CSS Display Bug** — Fixed lesson number display issue where "Урок 1" showed only "yr"
+- 🔧 **CSS Conflicts** — Resolved conflicts between components.css and inline styles in lesson pages
+- 🎯 **Lesson Styling** — Unified lesson number styling across all lesson pages (orange background, white text)
+- 📱 **Visual Consistency** — Ensured proper display of lesson badges in both circular (main page) and rectangular (lesson pages) formats
+
+### Changed
+
+- 🎨 **Lesson 2 Styling** — Changed from gradient text to consistent orange background style matching Lesson 1
+- 🔧 **CSS Specificity** — Added !important rules to prevent external CSS from overriding lesson-specific styles
+
 ## [2.3.0] - 2025-09-21
 
 ### Added
