@@ -3,7 +3,8 @@
    ================================= */
 
 /* Buttons */
-.cta-button, .button {
+.cta-button,
+.button {
   background-color: var(--color-button);
   color: var(--color-button-text);
   padding: var(--space-md) var(--space-xl);
@@ -19,7 +20,8 @@
   min-width: 44px;
 }
 
-.cta-button:hover, .button:hover {
+.cta-button:hover,
+.button:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -167,9 +169,17 @@
   border-radius: 50%;
 }
 
-.terminal-dot.red { background-color: #ff5f56; }
-.terminal-dot.yellow { background-color: #ffbd2e; }
-.terminal-dot.green { background-color: #27ca3f; }
+.terminal-dot.red {
+  background-color: #ff5f56;
+}
+
+.terminal-dot.yellow {
+  background-color: #ffbd2e;
+}
+
+.terminal-dot.green {
+  background-color: #27ca3f;
+}
 
 .terminal-content {
   color: #ffffff;
@@ -196,8 +206,16 @@
 }
 
 @keyframes blink {
-  0%, 50% { border-color: transparent; }
-  51%, 100% { border-color: #ffffff; }
+
+  0%,
+  50% {
+    border-color: transparent;
+  }
+
+  51%,
+  100% {
+    border-color: #ffffff;
+  }
 }
 
 /* Completion Toast */
@@ -260,7 +278,9 @@
 
 /* Responsive Components */
 @media (max-width: 768px) {
-  .cta-button, .button {
+
+  .cta-button,
+  .button {
     padding: var(--space-md) var(--space-lg);
     font-size: 16px;
   }

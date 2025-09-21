@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,18 +79,37 @@
 
         .nav {
             display: flex;
+            align-items: center;
             gap: 32px;
         }
 
-        .nav-link {
+        .nav-lessons {
             color: var(--color-text);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.15s ease;
         }
 
-        .nav-link:hover {
+        .nav-lessons:hover {
             color: var(--color-accent);
+        }
+
+        .nav-progress {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-progress:hover {
+            color: var(--color-accent);
+        }
+
+        /* Mobile navigation */
+        @media (max-width: 768px) {
+            .nav {
+                gap: 16px;
+            }
         }
 
         /* Hero critical styles */
@@ -171,7 +191,7 @@
             background: var(--terminal-bg);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             font-family: 'Monaco', 'Menlo', monospace;
             max-width: 900px;
             margin: 0 auto;
@@ -198,9 +218,17 @@
             display: inline-block;
         }
 
-        .control.close { background-color: #ff5f56; }
-        .control.minimize { background-color: #ffbd2e; }
-        .control.maximize { background-color: #27ca3f; }
+        .control.close {
+            background-color: #ff5f56;
+        }
+
+        .control.minimize {
+            background-color: #ffbd2e;
+        }
+
+        .control.maximize {
+            background-color: #27ca3f;
+        }
 
         .terminal-title {
             color: #ccc;
@@ -381,41 +409,111 @@
 
         /* Mobile critical styles */
         @media (max-width: 768px) {
-            .container { padding: 0 16px; }
-            .header-content { height: 64px; }
-            .hero { padding: 80px 0; }
-            .lesson-title { font-size: 40px; }
-            .lesson-description { font-size: 18px; }
-            .nav { display: none; }
+            .container {
+                padding: 0 16px;
+            }
 
-            .terminal-section { padding: 40px 0; }
-            .terminal-wrapper { margin: 0 16px; }
-            .terminal-body { padding: 16px; min-height: 300px; }
-            .terminal-input { font-size: 16px; } /* Предотвращение зума на iOS */
+            .header-content {
+                height: 64px;
+            }
 
-            .lesson-hint { margin: 24px 16px 0; padding: 20px; }
+            .hero {
+                padding: 80px 0;
+            }
 
-            .steps-section { padding: 40px 0; }
-            .steps-section h2 { font-size: 32px; margin-bottom: 32px; }
-            .steps-grid { grid-template-columns: 1fr; gap: 16px; }
+            .lesson-title {
+                font-size: 40px;
+            }
 
-            .step-card { padding: 20px; }
-            .step-content h3 { font-size: 16px; }
-            .step-content p { font-size: 13px; }
+            .lesson-description {
+                font-size: 18px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .terminal-section {
+                padding: 40px 0;
+            }
+
+            .terminal-wrapper {
+                margin: 0 16px;
+            }
+
+            .terminal-body {
+                padding: 16px;
+                min-height: 300px;
+            }
+
+            .terminal-input {
+                font-size: 16px;
+            }
+
+            /* Предотвращение зума на iOS */
+
+            .lesson-hint {
+                margin: 24px 16px 0;
+                padding: 20px;
+            }
+
+            .steps-section {
+                padding: 40px 0;
+            }
+
+            .steps-section h2 {
+                font-size: 32px;
+                margin-bottom: 32px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .step-card {
+                padding: 20px;
+            }
+
+            .step-content h3 {
+                font-size: 16px;
+            }
+
+            .step-content p {
+                font-size: 13px;
+            }
         }
 
         /* Tablet styles */
         @media (max-width: 1024px) and (min-width: 769px) {
-            .steps-grid { grid-template-columns: repeat(2, 1fr); }
-            .terminal-wrapper { max-width: 800px; }
-            .lesson-hint { max-width: 800px; }
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .terminal-wrapper {
+                max-width: 800px;
+            }
+
+            .lesson-hint {
+                max-width: 800px;
+            }
         }
 
         /* Touch-friendly interactions */
         @media (hover: none) and (pointer: coarse) {
-            .step-card { min-height: 120px; }
-            .terminal-input { min-height: 44px; padding: 12px; }
-            .cta-button, .button { min-height: 48px; }
+            .step-card {
+                min-height: 120px;
+            }
+
+            .terminal-input {
+                min-height: 44px;
+                padding: 12px;
+            }
+
+            .cta-button,
+            .button {
+                min-height: 48px;
+            }
         }
 
         /* High contrast mode support */
@@ -423,6 +521,7 @@
             .terminal-wrapper {
                 border: 2px solid #fff;
             }
+
             .step-card {
                 border-width: 2px;
             }
@@ -430,9 +529,13 @@
 
         /* Reduced motion support */
         @media (prefers-reduced-motion: reduce) {
-            .step-card, .terminal-input, .progress-fill {
+
+            .step-card,
+            .terminal-input,
+            .progress-fill {
                 transition: none;
             }
+
             .completion-toast {
                 animation: none;
             }
@@ -516,6 +619,7 @@
     <link rel="stylesheet" href="css/sections.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -523,8 +627,8 @@
             <div class="header-content">
                 <a href="index.html" class="logo">Claude Code Academy</a>
                 <nav class="nav">
-                    <a href="index.html" class="nav-link">← Главная</a>
-                    <a href="#progress" class="nav-link">Прогресс</a>
+                    <a href="index.html#lessons" class="nav-lessons">← Все уроки</a>
+                    <a href="#progress" class="nav-progress">Прогресс</a>
                 </nav>
             </div>
         </div>
@@ -573,11 +677,8 @@
 
                     <div class="terminal-input-line">
                         <span class="prompt">➜ ~</span>
-                        <input type="text"
-                               class="terminal-input"
-                               id="terminal-input"
-                               placeholder="Введите команду..."
-                               autocomplete="off">
+                        <input type="text" class="terminal-input" id="terminal-input" placeholder="Введите команду..."
+                            autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -685,7 +786,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Claude Code Academy</h4>
-                    <p style="color: var(--color-muted); margin-top: 8px;">Интерактивное обучение командной строке с ИИ-помощником</p>
+                    <p style="color: var(--color-muted); margin-top: 8px;">Интерактивное обучение командной строке с
+                        ИИ-помощником</p>
                 </div>
                 <div class="footer-section">
                     <h4>Обучение</h4>
@@ -1218,4 +1320,5 @@ Hello! Добро пожаловать в Claude Code Academy!
         window.Lesson1 = Lesson1;
     </script>
 </body>
+
 </html>

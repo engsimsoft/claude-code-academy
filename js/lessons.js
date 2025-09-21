@@ -23,6 +23,11 @@ const Lessons = {
     this.bindEvents();
     this.updateLessonLocks();
 
+    // Запускать обновление прогресса каждые 2 секунды для синхронизации
+    setInterval(() => {
+      this.updateAllProgressBars();
+    }, 2000);
+
     if (this._lessonCards.length > 0) {
       console.log('Lessons: Модуль инициализирован, найдено карточек:', this._lessonCards.length);
     } else {
@@ -36,17 +41,27 @@ const Lessons = {
   loadProgressData() {
     // Синхронизировать с данными из уроков
     const lesson1Progress = Utils.storage('lesson1-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson2Progress = Utils.storage('lesson2-progress') || { currentStepIndex: 0, completedSteps: 0 };
+
+    // Рассчитать прогресс для каждого урока
+    const lesson1Percent = Math.round((lesson1Progress.completedSteps / 8) * 100);
+    const lesson2Percent = Math.round((lesson2Progress.completedSteps / 10) * 100);
 
     this._progressData = Utils.storage('claude-lessons-progress') || {
       lesson1: {
-        progress: lesson1Progress.completedSteps === 8 ? 100 : Math.round((lesson1Progress.completedSteps / 8) * 100),
+        progress: lesson1Percent,
         completed: lesson1Progress.completedSteps === 8
       },
-      lesson2: { progress: 0, completed: false },
+      lesson2: {
+        progress: lesson2Percent,
+        completed: lesson2Progress.completedSteps === 10
+      },
       lesson3: { progress: 0, completed: false },
       lesson4: { progress: 0, completed: false }
     };
 
+    // Обновить данные в localStorage если они изменились
+    this.saveProgressData();
     this.updateAllProgressBars();
     this.updateLessonLocks();
   },
@@ -277,12 +292,12 @@ const Lessons = {
       // Обновить текст прогресса
       const progressText = card.querySelector('.progress-text');
       if (progressText) {
-        if (lessonData && lessonData.completed) {
-          progressText.textContent = 'Завершено';
+        if (lessonData && lessonData.progress === 100) {
+          progressText.textContent = '100% завершено';
         } else if (lessonData && lessonData.progress > 0) {
           progressText.textContent = `${lessonData.progress}% завершено`;
         } else {
-          progressText.textContent = 'Доступно';
+          progressText.textContent = '0% завершено';
         }
       }
     });
@@ -305,9 +320,11 @@ const Lessons = {
 
       // Обновление текста
       if (newProgress === 100) {
-        progressText.textContent = 'Завершено';
-      } else {
+        progressText.textContent = '100% завершено';
+      } else if (newProgress > 0) {
         progressText.textContent = `${newProgress}% завершено`;
+      } else {
+        progressText.textContent = '0% завершено';
       }
     }
   },
@@ -316,31 +333,31 @@ const Lessons = {
    * Обновление всех progress bars
    */
   updateAllProgressBars() {
+    // Сначала обновляем данные прогресса из localStorage
+    this.refreshProgressData();
+    
+    // Затем обновляем все карточки
     this._lessonCards.forEach(card => {
       this.animateProgressBar(card);
     });
+  },
 
-    // Обновить прогресс первого урока на основе данных из урока
-    const lesson1Progress = Utils.storage('lesson1-progress');
-    if (lesson1Progress) {
-      const progressPercent = lesson1Progress.completedSteps === 8 ? 100 : Math.round((lesson1Progress.completedSteps / 8) * 100);
-      const progressFill = document.getElementById('lesson1-progress');
-      const progressText = document.getElementById('lesson1-text');
+  /**
+   * Обновление данных прогресса из localStorage (без сохранения)
+   */
+  refreshProgressData() {
+    const lesson1Progress = Utils.storage('lesson1-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson2Progress = Utils.storage('lesson2-progress') || { currentStepIndex: 0, completedSteps: 0 };
 
-      if (progressFill) {
-        progressFill.style.width = `${progressPercent}%`;
-      }
+    // Рассчитать актуальный прогресс
+    const lesson1Percent = Math.round((lesson1Progress.completedSteps / 8) * 100);
+    const lesson2Percent = Math.round((lesson2Progress.completedSteps / 10) * 100);
 
-      if (progressText) {
-        if (progressPercent === 100) {
-          progressText.textContent = 'Завершено';
-        } else if (progressPercent > 0) {
-          progressText.textContent = `${progressPercent}% завершено`;
-        } else {
-          progressText.textContent = 'Не начато';
-        }
-      }
-    }
+    // Обновить внутренние данные
+    this._progressData.lesson1.progress = lesson1Percent;
+    this._progressData.lesson1.completed = lesson1Progress.completedSteps === 8;
+    this._progressData.lesson2.progress = lesson2Percent;
+    this._progressData.lesson2.completed = lesson2Progress.completedSteps === 10;
   },
 
   /**
@@ -377,13 +394,13 @@ const Lessons = {
    * Сброс прогресса (для тестирования)
    */
   resetProgress() {
-    this._progressData = {
-      lesson1: { progress: 100, completed: true },
-      lesson2: { progress: 75, completed: false },
-      lesson3: { progress: 40, completed: false },
-      lesson4: { progress: 0, completed: false }
-    };
-    this.saveProgressData();
+    // Очистить localStorage
+    Utils.storage('lesson1-progress', null);
+    Utils.storage('lesson2-progress', null);
+    Utils.storage('claude-lessons-progress', null);
+    
+    // Перезагрузить данные
+    this.loadProgressData();
     this.updateAllProgressBars();
   }
 };

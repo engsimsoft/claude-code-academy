@@ -5,6 +5,35 @@ All notable changes to Claude Code Academy will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2025-09-21
+
+### Added
+
+- 🧭 **Unified Navigation System** — Consistent navigation across all lesson pages
+- 🔄 **Real-time Progress Sync** — Automatic synchronization between lessons and main page
+- ⏱️ **Auto-refresh Progress** — Progress updates every 2 seconds for real-time accuracy
+- 📊 **Improved Progress Display** — Always shows percentage (0%, 25%, 100% завершено)
+
+### Changed
+
+- 🧭 **Navigation UX** — Simplified from complex breadcrumbs to "← Все уроки" pattern
+- 📈 **Progress Logic** — Fixed calculation to show real completion percentage
+- 🎯 **User Flow** — Direct access to lesson selection from any lesson page
+- 🔄 **Data Sync** — Progress now syncs from actual lesson localStorage data
+
+### Fixed
+
+- 🐛 **Progress Display Bug** — Fixed mismatch between progress bar and text (was showing 100% text with 63% bar)
+- 🧭 **Navigation Consistency** — Removed duplicate functionality with main page lesson cards
+- 📊 **Progress Calculation** — Corrected lesson 1 (8 steps) and lesson 2 (10 steps) progress math
+- 🔄 **Data Conflicts** — Resolved conflicts between different progress update functions
+
+### Technical
+
+- 🏗️ **lessons.js Refactor** — Added `refreshProgressData()` and improved `updateAllProgressBars()`
+- 🧹 **Code Cleanup** — Removed conflicting progress update logic
+- ⚡ **Performance** — Added efficient progress synchronization system
+
 ## [2.2.0] - 2025-09-21
 
 ### Added
@@ -61,9 +90,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🤖 **AI-to-AI Development Workflow** — Integration of Claude Sonnet 4 + Grok Code Fast 1
 - 🏗️ **Modular Architecture** — Complete refactoring into 5 CSS + 5 JS modules
-- 📋 **Comprehensive Rules System** — .claude-rules, CODING-STANDARDS.md, PROJECT-GUIDELINES.md
+- 📋 **Comprehensive Rules System** — .claude-rules, docs/CONTRIBUTING.md
 - ⚡ **Performance Optimization** — Critical CSS inline + preload + defer strategy
-- 📚 **Extended Documentation** — CODING-STANDARDS.md (889 lines), PROJECT-GUIDELINES.md (430 lines)
+- 📚 **Extended Documentation** — Comprehensive docs in docs/ folder
 - 🎯 **Template Prompts System** — prompts/TEMPLATE-PROMPTS.md for AI development
 - 🔧 **Enhanced Error Handling** — Comprehensive error tracking and fallback UI
 - 📱 **Improved Responsive Design** — Better mobile experience with refined breakpoints
@@ -169,4 +198,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-*For more detailed information about each release, see the [Decisions Log](docs/99-DECISIONS-LOG.md) and [Current State](docs/90-CURRENT-STATE.md) documentation.*
+*For more detailed information about each release, see the project documentation in [docs/](docs/) folder.*
