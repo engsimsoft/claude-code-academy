@@ -719,6 +719,17 @@
     <script src="js/terminal-demo.js" defer></script>
     <script src="js/main.js" defer></script>
 
+    <!-- Load lessons module for unlocking next lessons -->
+    <script>
+        // Загрузка модуля уроков для разблокировки
+        if (!window.Lessons) {
+            const script = document.createElement('script');
+            script.src = 'js/lessons.js';
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+    </script>
+
     <!-- Lesson 1 Interactive Logic -->
     <script>
         /**
@@ -923,12 +934,21 @@ Hello! Добро пожаловать в Claude Code Academy!
 
                 // Проверка правильности команды
                 if (command === currentStep.command.toLowerCase()) {
-                    // Правильная команда - сначала завершаем шаг и переходим к следующему
+                    // Правильная команда - сначала завершаем шаг
                     this.completeStep(currentStep.id);
-                    this.moveToNextStep();
 
-                    // Затем показываем ответ (даже если он пустой)
-                    this.showResponse(currentStep.response);
+                    // Проверяем, является ли это последним шагом
+                    const isLastStep = this.currentStepIndex === this.lessonSteps.length - 1;
+
+                    if (isLastStep) {
+                        // Последний шаг - показываем завершение урока
+                        this.showCompletionMessage();
+                        this.showResponse(currentStep.response);
+                    } else {
+                        // Не последний шаг - переходим к следующему
+                        this.moveToNextStep();
+                        this.showResponse(currentStep.response);
+                    }
                 } else {
                     // Неправильная команда - показать подсказку
                     this.showHint(`❌ Попробуйте еще раз. ${currentStep.hint}`);
@@ -994,11 +1014,6 @@ Hello! Добро пожаловать в Claude Code Academy!
                     this.currentStepIndex++;
                     this.saveProgress();
                     this.updateUI();
-
-                    // Проверка завершения урока
-                    if (this.currentStepIndex === this.lessonSteps.length - 1) {
-                        this.showCompletionMessage();
-                    }
                 }
             },
 
@@ -1059,7 +1074,48 @@ Hello! Добро пожаловать в Claude Code Academy!
 
                     // Показать контейнер следующего урока
                     this.showNextLessonContainer();
+
+                    // ОБНОВИТЬ ГЛОБАЛЬНЫЙ ПРОГРЕСС УРОКОВ
+                    this.updateGlobalLessonsProgress();
+
+                    // РАЗБЛОКИРОВАТЬ СЛЕДУЮЩИЙ УРОК
+                    this.unlockNextLesson();
                 }, 1000);
+            },
+
+            /**
+             * Обновление глобального прогресса уроков
+             */
+            updateGlobalLessonsProgress() {
+                // Синхронизировать с глобальным состоянием уроков
+                const globalProgress = Utils.storage('claude-lessons-progress') || {
+                    lesson1: { progress: 0, completed: false },
+                    lesson2: { progress: 0, completed: false },
+                    lesson3: { progress: 0, completed: false },
+                    lesson4: { progress: 0, completed: false }
+                };
+
+                // Обновить урок 1 как завершенный
+                globalProgress.lesson1.progress = 100;
+                globalProgress.lesson1.completed = true;
+
+                // Сохранить обновленный глобальный прогресс
+                Utils.storage('claude-lessons-progress', globalProgress);
+
+                console.log('Lesson1: Глобальный прогресс обновлен - урок 1 завершен');
+            },
+
+            /**
+             * Разблокировка следующего урока
+             */
+            unlockNextLesson() {
+                // Использовать глобальный модуль Lessons для разблокировки урока 2
+                if (window.Lessons && typeof window.Lessons.unlockNextLesson === 'function') {
+                    window.Lessons.unlockNextLesson(2);
+                    console.log('Lesson1: Урок 2 разблокирован');
+                } else {
+                    console.warn('Lesson1: Модуль Lessons не найден, урок 2 не разблокирован');
+                }
             },
 
             /**
