@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Урок 3 - На реконструкции | Claude Code Academy</title>
+    <title>Урок 3: Работа с проектом - Claude Code Academy</title>
+    
+    <!-- Prevent caching for development -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <!-- Critical CSS for first paint -->
     <style>
+        /* Critical styles for above-the-fold content */
         :root {
             --color-bg: #F7F5F3;
             --color-text: #2D1B0E;
             --color-accent: #FF6B35;
+            --color-button: #1a1a1a;
+            --color-button-text: #ffffff;
+            --color-card: #ffffff;
+            --color-border: #E5E5E5;
+            --color-muted: #7A7A7A;
             --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --terminal-bg: #1a1a1a;
+            --terminal-text: #00ff00;
+            --step-active: #FF6B35;
+            --step-complete: #22c55e;
+            --step-pending: #e5e5e5;
         }
 
         * {
@@ -26,21 +43,18 @@
             color: var(--color-text);
             line-height: 1.6;
             font-size: 16px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
-            flex: 1;
         }
 
+        /* Header critical styles */
         .header {
             background-color: var(--color-bg);
-            border-bottom: 1px solid #E5E5E5;
+            border-bottom: 1px solid var(--color-border);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -51,9 +65,6 @@
             justify-content: space-between;
             align-items: center;
             height: 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
         }
 
         .logo {
@@ -71,70 +82,486 @@
             font-size: 28px;
         }
 
-        .construction {
-            flex: 1;
+        .nav {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
+            gap: 32px;
+        }
+
+        .nav-lessons {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-lessons:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-progress {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .nav-progress:hover {
+            color: var(--color-accent);
+        }
+
+        /* Hero critical styles */
+        .hero {
             padding: 120px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-bg) 0%, #F2F0EE 100%);
         }
 
-        .construction-icon {
-            font-size: 120px;
-            margin-bottom: 32px;
+        .lesson-header {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .construction-title {
-            font-size: 48px;
+        .lesson-header .lesson-number {
+            display: inline-block !important;
+            background-color: var(--color-accent) !important;
+            color: white !important;
+            padding: 8px 16px !important;
+            border-radius: 20px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            margin-bottom: 16px !important;
+            width: auto !important;
+            height: auto !important;
+            line-height: normal !important;
+            text-align: left !important;
+        }
+
+        .lesson-title {
+            font-size: 64px;
             font-weight: 700;
             margin-bottom: 24px;
             color: var(--color-text);
+            line-height: 1.1;
         }
 
-        .construction-subtitle {
-            font-size: 24px;
-            color: #7A7A7A;
-            margin-bottom: 48px;
+        .lesson-description {
+            font-size: 20px;
+            color: var(--color-muted);
+            margin-bottom: 32px;
             max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .back-button {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            padding: 16px 32px;
+        .lesson-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background-color: var(--color-border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--color-accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--color-muted);
+        }
+
+        /* Terminal specific styles */
+        .terminal-section {
+            padding: 80px 0;
+            background-color: var(--color-bg);
+        }
+
+        .terminal-wrapper {
+            background: var(--terminal-bg);
             border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            font-family: 'Monaco', 'Menlo', monospace;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #444;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
             display: inline-block;
+        }
+
+        .control.close {
+            background-color: #ff5f56;
+        }
+
+        .control.minimize {
+            background-color: #ffbd2e;
+        }
+
+        .control.maximize {
+            background-color: #27ca3f;
+        }
+
+        .terminal-title {
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            min-height: 400px;
+            background: var(--terminal-bg);
+        }
+
+        .terminal-output {
+            margin-bottom: 20px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .prompt {
+            color: var(--terminal-text);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .text {
+            color: #ffffff;
+            flex: 1;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .text.response {
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-input {
+            background: transparent;
             border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            color: var(--terminal-text);
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            flex: 1;
+            caret-color: var(--terminal-text);
         }
 
-        .back-button:hover {
-            background-color: #333;
+        .terminal-input::placeholder {
+            color: #666;
         }
 
-        .footer {
-            border-top: 1px solid #E5E5E5;
-            padding: 32px 0;
-            margin-top: auto;
+        /* File path highlighting */
+        .file-path {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid var(--color-accent);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: 'Monaco', monospace;
+            font-size: 14px;
+            color: var(--color-accent);
         }
 
-        .footer-content {
+        /* Git diff visualization */
+        .git-diff {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace;
+            margin: 8px 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .git-addition { color: #22c55e; }
+        .git-deletion { color: #ef4444; }
+        .git-unchanged { color: #9ca3af; }
+
+        /* Architecture diagram */
+        .architecture-tree {
+            background: rgba(255, 107, 53, 0.05);
+            border-left: 3px solid #FF6B35;
+            padding: 16px;
+            font-family: monospace;
+            white-space: pre-line;
+            margin: 8px 0;
+        }
+
+        /* Lesson hint styles */
+        .lesson-hint {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 32px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lesson-hint h3 {
+            color: var(--color-text);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .lesson-hint p {
+            color: var(--color-muted);
+            margin-bottom: 0;
+        }
+
+        .lesson-hint code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            color: #d73a49;
+        }
+
+        /* Steps section styles */
+        .steps-section {
+            padding: 80px 0;
+            background: var(--color-bg);
+        }
+
+        .steps-section h2 {
             text-align: center;
-            color: #7A7A7A;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 64px;
+            color: var(--color-text);
         }
 
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: var(--color-card);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-card.active {
+            border-left: 4px solid var(--step-active);
+            background: rgba(255, 107, 53, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
+        }
+
+        .step-card.completed {
+            border-left: 4px solid var(--step-complete);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background-color: var(--color-border);
+            color: var(--color-text);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .step-card.active .step-number {
+            background-color: var(--step-active);
+            color: white;
+        }
+
+        .step-card.completed .step-number {
+            background-color: var(--step-complete);
+            color: white;
+        }
+
+        .step-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text);
+        }
+
+        .step-content p {
+            color: var(--color-muted);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .step-status {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 20px;
+        }
+
+        /* Next lesson container styles */
+        .next-lesson-container {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 32px;
+            text-align: center;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .next-lesson-message {
+            margin: 20px 0;
+        }
+
+        .next-lesson-message h3 {
+            color: var(--color-accent);
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .next-lesson-message p {
+            color: var(--color-muted);
+            font-size: 16px;
+        }
+
+        .next-lesson-container .cta-button {
+            margin-bottom: 16px;
+        }
+
+        /* Mobile critical styles */
         @media (max-width: 768px) {
-            .container { padding: 0 16px; }
-            .header-content { height: 64px; padding: 0 16px; }
-            .construction { padding: 80px 0; }
-            .construction-title { font-size: 32px; }
-            .construction-subtitle { font-size: 18px; }
+            .container {
+                padding: 0 16px;
+            }
+
+            .header-content {
+                height: 64px;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .lesson-title {
+                font-size: 40px;
+            }
+
+            .lesson-description {
+                font-size: 18px;
+            }
+
+            .nav {
+                gap: 16px;
+            }
+
+            .terminal-section {
+                padding: 40px 0;
+            }
+
+            .terminal-wrapper {
+                margin: 0 16px;
+            }
+
+            .terminal-body {
+                padding: 20px;
+                min-height: 300px;
+            }
+
+            .terminal-output {
+                max-height: 250px;
+                padding-right: 4px;
+            }
+
+            .terminal-input {
+                font-size: 16px;
+            }
+
+            .lesson-hint {
+                margin: 24px 16px 0;
+                padding: 20px;
+            }
+
+            .steps-section {
+                padding: 40px 0;
+            }
+
+            .steps-section h2 {
+                font-size: 32px;
+                margin-bottom: 32px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .step-card {
+                padding: 20px;
+            }
+
+            .step-content h3 {
+                font-size: 16px;
+            }
+
+            .step-content p {
+                font-size: 13px;
+            }
         }
     </style>
 
@@ -155,25 +582,232 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">Claude Code Academy</a>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Claude Code Academy</a>
+                <nav class="nav">
+                    <a href="index.html#lessons" class="nav-lessons">← Все уроки</a>
+                    <a href="#progress" class="nav-progress">Прогресс</a>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Construction Page -->
-    <main class="construction">
+    <!-- Lesson Hero Section -->
+    <section class="hero lesson-hero">
         <div class="container">
-            <div class="construction-icon">🚧</div>
-            <h1 class="construction-title">Урок 3 на реконструкции</h1>
-            <p class="construction-subtitle">Этот урок находится в разработке. Скоро здесь появится материал о работе с проектом в Claude Code.</p>
-            <a href="index.html" class="back-button">Вернуться на главную</a>
+            <div class="lesson-header">
+                <span class="lesson-number">Урок 3</span>
+                <h1 class="lesson-title">Работа с проектом</h1>
+                <p class="lesson-description">
+                    Изучаем продвинутые возможности Claude Code: навигация по файлам, 
+                    Git операции, рефакторинг и управление архитектурой проекта.
+                </p>
+                <div class="lesson-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="lesson-progress"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0 / 12 шагов</span>
+                </div>
+            </div>
         </div>
-    </main>
+    </section>
+
+    <!-- Interactive Terminal Section -->
+    <section class="terminal-section">
+        <div class="container">
+            <div class="terminal-wrapper">
+                <div class="terminal-header">
+                    <div class="terminal-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="terminal-title">Claude Code Project Terminal</div>
+                </div>
+
+                <div class="terminal-body" id="terminal">
+                    <div class="terminal-output" id="terminal-output">
+                        <div class="terminal-line">
+                            <span class="prompt">➜ project</span>
+                            <span class="text">Добро пожаловать в продвинутый режим Claude Code!</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="prompt">➜ project</span>
+                            <span class="text">Здесь вы изучите работу с файлами, Git и архитектурой проекта.</span>
+                        </div>
+                    </div>
+
+                    <div class="terminal-input-line">
+                        <span class="prompt">➜ project</span>
+                        <input type="text" class="terminal-input" id="terminal-input" placeholder="Введите команду..."
+                            autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Подсказки рядом с терминалом -->
+            <div class="lesson-hint" id="current-hint">
+                <h3>Шаг 1: Навигация по файлам проекта</h3>
+                <p>Используйте @ синтаксис для работы с файлами: <code>@package.json покажи зависимости</code></p>
+            </div>
+
+            <!-- Кнопка следующего урока (скрыта по умолчанию) -->
+            <div class="next-lesson-container" id="next-lesson-container" style="display: none;">
+                <a href="lesson-4.html" class="cta-button">Урок 4: Продвинутые фичи →</a>
+                <div class="next-lesson-message">
+                    <h3>🎉 Отличная работа!</h3>
+                    <p>Вы освоили работу с проектом в Claude Code! Переходите к финальному уроку.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lesson Steps Progress -->
+    <section class="steps-section" id="progress">
+        <div class="container">
+            <h2>Ваш прогресс</h2>
+            <div class="steps-grid">
+                <div class="step-card active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>@package.json покажи зависимости</h3>
+                        <p>Навигация по файлам проекта</p>
+                    </div>
+                    <div class="step-status">⏳</div>
+                </div>
+
+                <div class="step-card" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>@src/components найди все кнопки</h3>
+                        <p>Поиск компонентов по папкам</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>создай единый Button компонент</h3>
+                        <p>Унификация компонентов</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>замени все старые кнопки на новый компонент</h3>
+                        <p>Автоматический рефакторинг</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>покажи статус git и что изменилось</h3>
+                        <p>Git status и diff</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="6">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>создай коммит с хорошим сообщением</h3>
+                        <p>Автоматический Git commit</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="7">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h3>проанализируй архитектуру проекта</h3>
+                        <p>Architectural review</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="8">
+                    <div class="step-number">8</div>
+                    <div class="step-content">
+                        <h3>создай недостающие TypeScript типы</h3>
+                        <p>Type definitions</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="9">
+                    <div class="step-number">9</div>
+                    <div class="step-content">
+                        <h3>добавь кастомные хуки для логики</h3>
+                        <p>Custom hooks extraction</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="10">
+                    <div class="step-number">10</div>
+                    <div class="step-content">
+                        <h3>оптимизируй производительность компонентов</h3>
+                        <p>React performance optimization</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="11">
+                    <div class="step-number">11</div>
+                    <div class="step-content">
+                        <h3>настрой автоматические тесты</h3>
+                        <p>Test automation setup</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+
+                <div class="step-card" data-step="12">
+                    <div class="step-number">12</div>
+                    <div class="step-content">
+                        <h3>создай план развития проекта</h3>
+                        <p>Project roadmap planning</p>
+                    </div>
+                    <div class="step-status">⭕</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Claude Code Academy</h4>
+                    <p style="color: var(--color-muted); margin-top: 8px;">Интерактивное обучение командной строке с
+                        ИИ-помощником</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Обучение</h4>
+                    <a href="index.html#lessons">Все уроки</a>
+                    <a href="index.html#demo">Демо</a>
+                    <a href="index.html#solution">Возможности</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Ресурсы</h4>
+                    <a href="#">Документация</a>
+                    <a href="#">Сообщество</a>
+                    <a href="#">Поддержка</a>
+                </div>
+                <div class="footer-section">
+                    <h4>О проекте</h4>
+                    <a href="#">О нас</a>
+                    <a href="#">Блог</a>
+                    <a href="#">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>&copy; 2024 Claude Code Academy. Создано с Claude Code.</p>
             </div>
         </div>
@@ -185,5 +819,8 @@
     <script src="js/lessons.js" defer></script>
     <script src="js/terminal-demo.js" defer></script>
     <script src="js/main.js" defer></script>
+
+    <!-- Lesson 3 Interactive Logic -->
+    <script src="js/lesson3-interactive.js" defer></script>
 </body>
 </html>

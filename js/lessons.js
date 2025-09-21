@@ -38,14 +38,18 @@ const Lessons = {
   /**
    * Загрузка данных прогресса из localStorage
    */
-  loadProgressData() {
+loadProgressData() {
     // Синхронизировать с данными из уроков
     const lesson1Progress = Utils.storage('lesson1-progress') || { currentStepIndex: 0, completedSteps: 0 };
     const lesson2Progress = Utils.storage('lesson2-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson3Progress = Utils.storage('lesson3-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson4Progress = Utils.storage('lesson4-progress') || { currentStepIndex: 0, completedSteps: 0 };
 
     // Рассчитать прогресс для каждого урока
     const lesson1Percent = Math.round((lesson1Progress.completedSteps / 8) * 100);
     const lesson2Percent = Math.round((lesson2Progress.completedSteps / 10) * 100);
+    const lesson3Percent = Math.round((lesson3Progress.completedSteps / 12) * 100);
+    const lesson4Percent = Math.round((lesson4Progress.completedSteps / 15) * 100);
 
     this._progressData = Utils.storage('claude-lessons-progress') || {
       lesson1: {
@@ -56,8 +60,14 @@ const Lessons = {
         progress: lesson2Percent,
         completed: lesson2Progress.completedSteps === 10
       },
-      lesson3: { progress: 0, completed: false },
-      lesson4: { progress: 0, completed: false }
+      lesson3: {
+        progress: lesson3Percent,
+        completed: lesson3Progress.completedSteps === 12
+      },
+      lesson4: {
+        progress: lesson4Percent,
+        completed: lesson4Progress.completedSteps === 15
+      }
     };
 
     // Обновить данные в localStorage если они изменились
@@ -348,16 +358,24 @@ const Lessons = {
   refreshProgressData() {
     const lesson1Progress = Utils.storage('lesson1-progress') || { currentStepIndex: 0, completedSteps: 0 };
     const lesson2Progress = Utils.storage('lesson2-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson3Progress = Utils.storage('lesson3-progress') || { currentStepIndex: 0, completedSteps: 0 };
+    const lesson4Progress = Utils.storage('lesson4-progress') || { currentStepIndex: 0, completedSteps: 0 };
 
     // Рассчитать актуальный прогресс
     const lesson1Percent = Math.round((lesson1Progress.completedSteps / 8) * 100);
     const lesson2Percent = Math.round((lesson2Progress.completedSteps / 10) * 100);
+    const lesson3Percent = Math.round((lesson3Progress.completedSteps / 12) * 100);
+    const lesson4Percent = Math.round((lesson4Progress.completedSteps / 15) * 100);
 
     // Обновить внутренние данные
     this._progressData.lesson1.progress = lesson1Percent;
     this._progressData.lesson1.completed = lesson1Progress.completedSteps === 8;
     this._progressData.lesson2.progress = lesson2Percent;
     this._progressData.lesson2.completed = lesson2Progress.completedSteps === 10;
+    this._progressData.lesson3.progress = lesson3Percent;
+    this._progressData.lesson3.completed = lesson3Progress.completedSteps === 12;
+    this._progressData.lesson4.progress = lesson4Percent;
+    this._progressData.lesson4.completed = lesson4Progress.completedSteps === 15;
   },
 
   /**
@@ -397,11 +415,21 @@ const Lessons = {
     // Очистить localStorage
     Utils.storage('lesson1-progress', null);
     Utils.storage('lesson2-progress', null);
+    Utils.storage('lesson3-progress', null);
+    Utils.storage('lesson4-progress', null);
     Utils.storage('claude-lessons-progress', null);
     
     // Перезагрузить данные
     this.loadProgressData();
     this.updateAllProgressBars();
+  },
+
+  /**
+   * Разблокировка урока (публичный метод)
+   * @param {number} lessonNumber - Номер урока для разблокировки
+   */
+  unlockLesson(lessonNumber) {
+    this.unlockNextLesson(lessonNumber);
   }
 };
 
