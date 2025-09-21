@@ -5,6 +5,30 @@ All notable changes to Claude Code Academy will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-09-21
+
+### Added
+- 🚫 **Removed Lesson Locks** — All lessons now accessible without completion requirements
+- 🏗️ **lesson-3.html** — "Under Construction" page for Lesson 3
+- 🏗️ **lesson-4.html** — "Under Construction" page for Lesson 4
+- 🔗 **Direct Lesson Access** — All lessons accessible via direct links
+
+### Changed
+- 📊 **Project Status** — Updated to Phase 2.5 (4/4 lessons accessible)
+- 🎯 **User Experience** — Immediate access to all lesson content
+- 📚 **Navigation Flow** — Simplified lesson progression without barriers
+
+### Fixed
+- 🔓 **Lesson Accessibility** — Fixed blocking mechanism preventing lesson access
+- 🐛 **File Naming** — Corrected lesson-2.html filename consistency
+- 🔗 **Link Structure** — Ensured all lesson links point to correct files
+
+### Educational
+- ✅ **Lesson 1** — "Первые команды Claude Code" (8 steps, completed)
+- ✅ **Lesson 2** — "Естественные команды" (10 steps, completed)
+- 🏗️ **Lesson 3** — "Работа с проектом" (under construction)
+- 🏗️ **Lesson 4** — "Продвинутые фичи" (under construction)
+
 ## [2.1.0] - 2025-09-21
 
 ### Added

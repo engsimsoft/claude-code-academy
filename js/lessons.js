@@ -214,24 +214,20 @@ const Lessons = {
       }
 
       // Добавить ссылку для разблокированного урока
-      const lessonLink = document.createElement('a');
-      lessonLink.href = `lesson-${nextLessonNumber}.html`;
-      lessonLink.className = 'lesson-card-link';
-      lessonLink.style.display = 'block';
-      lessonLink.style.textDecoration = 'none';
-      lessonLink.style.color = 'inherit';
-
-      // Обернуть карточку в ссылку
-      const parent = nextCard.parentNode;
-      console.log('Lessons: Родительский элемент:', parent);
-
-      if (parent && !parent.classList.contains('lesson-card-link')) {
+      if (!nextCard.parentNode.classList.contains('lesson-card-link')) {
         console.log('Lessons: Оборачиваем в ссылку');
-        parent.replaceWith(lessonLink);
+        const lessonLink = document.createElement('a');
+        lessonLink.href = `lesson-${nextLessonNumber}.html`;
+        lessonLink.className = 'lesson-card-link';
+        lessonLink.style.display = 'block';
+        lessonLink.style.textDecoration = 'none';
+        lessonLink.style.color = 'inherit';
+
+        nextCard.parentNode.replaceChild(lessonLink, nextCard);
         lessonLink.appendChild(nextCard);
         console.log('Lessons: Урок успешно разблокирован');
       } else {
-        console.log('Lessons: Карточка уже обернута в ссылку или родитель не найден');
+        console.log('Lessons: Карточка уже обернута в ссылку');
       }
     } else {
       console.error(`Lessons: Карточка урока ${nextLessonNumber} не найдена`);
@@ -251,36 +247,43 @@ const Lessons = {
       const lessonData = this._progressData[`lesson${lessonNumber}`];
       console.log(`Lessons: Урок ${lessonNumber}, данные:`, lessonData);
 
-      if (lessonNumber === 1) {
-        // Первый урок всегда доступен
-        card.classList.remove('locked');
-        card.classList.add('unlocked');
-        console.log(`Lessons: Урок ${lessonNumber} всегда разблокирован`);
-      } else if (lessonData && lessonData.completed) {
-        // Урок завершен - разблокирован
-        card.classList.remove('locked');
-        card.classList.add('unlocked');
-        console.log(`Lessons: Урок ${lessonNumber} завершен, разблокирован`);
+      // Все уроки теперь разблокированы
+      card.classList.remove('locked');
+      card.classList.add('unlocked');
+      card.removeAttribute('aria-disabled');
+      console.log(`Lessons: Урок ${lessonNumber} разблокирован`);
 
-        // Убедимся, что есть ссылка
-        const parent = card.parentNode;
-        if (!parent.classList.contains('lesson-card-link')) {
-          console.log(`Lessons: Добавляем ссылку для урока ${lessonNumber}`);
-          const lessonLink = document.createElement('a');
-          lessonLink.href = `lesson-${lessonNumber}.html`;
-          lessonLink.className = 'lesson-card-link';
-          lessonLink.style.display = 'block';
-          lessonLink.style.textDecoration = 'none';
-          lessonLink.style.color = 'inherit';
+      // Удалить значок замка если есть
+      const lockIcon = card.querySelector('.lesson-lock');
+      if (lockIcon) {
+        lockIcon.remove();
+        console.log('Lessons: Значок замка удален');
+      }
 
-          parent.replaceWith(lessonLink);
-          lessonLink.appendChild(card);
+      // Убедимся, что карточка обернута в ссылку
+      if (!card.parentNode.classList.contains('lesson-card-link')) {
+        console.log(`Lessons: Оборачиваем урок ${lessonNumber} в ссылку`);
+        const lessonLink = document.createElement('a');
+        lessonLink.href = `lesson-${lessonNumber}.html`;
+        lessonLink.className = 'lesson-card-link';
+        lessonLink.style.display = 'block';
+        lessonLink.style.textDecoration = 'none';
+        lessonLink.style.color = 'inherit';
+
+        card.parentNode.replaceChild(lessonLink, card);
+        lessonLink.appendChild(card);
+      }
+
+      // Обновить текст прогресса
+      const progressText = card.querySelector('.progress-text');
+      if (progressText) {
+        if (lessonData && lessonData.completed) {
+          progressText.textContent = 'Завершено';
+        } else if (lessonData && lessonData.progress > 0) {
+          progressText.textContent = `${lessonData.progress}% завершено`;
+        } else {
+          progressText.textContent = 'Доступно';
         }
-      } else {
-        // Урок заблокирован
-        card.classList.add('locked');
-        card.classList.remove('unlocked');
-        console.log(`Lessons: Урок ${lessonNumber} заблокирован`);
       }
     });
   },
